@@ -67,10 +67,10 @@ export default function LogsTable({ logs, onRowClick, loading }) {
                   {new Date(log.timestamp).toLocaleString()}
                 </td>
                 <td className="px-4 py-3 font-mono-data text-white">
-                  {log.source_ip}
+                  {log.ip_address}
                 </td>
-                <td className={`px-4 py-3 font-mono-data font-semibold ${getMethodColor(log.method)}`}>
-                  {log.method}
+                <td className={`px-4 py-3 font-mono-data font-semibold ${getMethodColor(log.request_type)}`}>
+                  {log.request_type}
                 </td>
                 <td className="px-4 py-3">
                   <span className={`inline-flex px-2 py-0.5 rounded text-xs border font-mono-data ${getStatusColor(log.status_code)}`}>

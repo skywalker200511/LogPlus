@@ -17,13 +17,13 @@ export async function fetchLogs(filters = {}) {
       query = query.eq('is_anomaly', false);
     }
 
-    // Filter by status code (ignore 'All' or empty)
-    if (filters.statusCode && filters.statusCode !== 'All') {
+    // Filter by status code (ignore 'All', 'all', or empty)
+    if (filters.statusCode && String(filters.statusCode).toLowerCase() !== 'all') {
       query = query.eq('status_code', parseInt(filters.statusCode, 10));
     }
 
-    // Filter by request type (ignore 'All' or empty)
-    if (filters.requestType && filters.requestType !== 'All') {
+    // Filter by request type (ignore 'All', 'all', or empty)
+    if (filters.requestType && String(filters.requestType).toLowerCase() !== 'all') {
       query = query.eq('request_type', filters.requestType);
     }
 
