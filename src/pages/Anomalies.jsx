@@ -32,10 +32,10 @@ export default function Anomalies() {
       const logs = data || [];
       setAnomalies(logs);
       
-      // Calculate stats based on risk_level
-      const criticalCount = logs.filter(l => l.risk_level === 'CRITICAL').length;
-      const highCount = logs.filter(l => l.risk_level === 'HIGH').length;
-      const suspiciousCount = logs.filter(l => l.risk_level === 'ELEVATED' || l.risk_level === 'LOW').length;
+      // Calculate stats based on anomaly_score
+      const criticalCount = logs.filter(l => l.anomaly_score >= 80).length;
+      const highCount = logs.filter(l => l.anomaly_score >= 60 && l.anomaly_score < 80).length;
+      const suspiciousCount = logs.filter(l => l.anomaly_score >= 30 && l.anomaly_score < 60).length;
       
       setStats({
         total: logs.length,
@@ -69,9 +69,9 @@ export default function Anomalies() {
   const getFilteredAnomalies = () => {
     return anomalies.filter(log => {
       // Risk filter
-      if (filter === 'Critical' && log.risk_level !== 'CRITICAL') return false;
-      if (filter === 'High' && log.risk_level !== 'HIGH') return false;
-      if (filter === 'Suspicious' && log.risk_level !== 'ELEVATED' && log.risk_level !== 'LOW') return false;
+      if (filter === 'Critical' && (log.anomaly_score == null || log.anomaly_score < 80)) return false;
+      if (filter === 'High' && (log.anomaly_score == null || log.anomaly_score < 60 || log.anomaly_score >= 80)) return false;
+      if (filter === 'Suspicious' && (log.anomaly_score == null || log.anomaly_score < 30 || log.anomaly_score >= 60)) return false;
       
       // Search filter (IP or reason)
       if (search) {
