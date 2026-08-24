@@ -23,10 +23,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const ChartWrapper = ({ title, children }) => (
-  <div className="bg-[#27272a] border border-[#3f3f46] rounded-md p-5 flex flex-col h-full w-full">
+  <div className="bg-[#27272a] border border-[#3f3f46] rounded-md p-5 flex flex-col h-full w-full min-h-[250px]">
     <h3 className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-4">{title}</h3>
-    <div className="flex-1 w-full h-full min-h-0">
-      {children}
+    <div className="flex-1 w-full h-full min-h-[150px] relative">
+      {/* Absolute position wrapper helps Recharts ResponsiveContainer calculate height correctly in flex layouts */}
+      <div className="absolute inset-0">
+        {children}
+      </div>
     </div>
   </div>
 );
@@ -37,10 +40,10 @@ export function TrafficChart({ data }) {
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 5, right: 0, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
-          <XAxis dataKey="time" stroke="#3f3f46" tick={{fill: '#71717a', fontSize: 11}} tickLine={false} />
+          <XAxis dataKey="date" stroke="#3f3f46" tick={{fill: '#71717a', fontSize: 11}} tickLine={false} />
           <YAxis stroke="#3f3f46" tick={{fill: '#71717a', fontSize: 11}} tickLine={false} axisLine={false} />
           <Tooltip content={<CustomTooltip />} />
-          <Area type="monotone" dataKey="requests" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.1} strokeWidth={2} />
+          <Area type="monotone" dataKey="count" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.1} strokeWidth={2} />
         </AreaChart>
       </ResponsiveContainer>
     </ChartWrapper>
