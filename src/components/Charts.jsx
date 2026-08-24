@@ -104,9 +104,9 @@ export function StatusCodesChart({ data }) {
           <Pie
             data={data}
             cx="50%"
-            cy="35%"
-            innerRadius={45}
-            outerRadius={65}
+            cy="40%"
+            innerRadius={40}
+            outerRadius={60}
             paddingAngle={2}
             dataKey="value"
             stroke="none"
