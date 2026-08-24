@@ -115,6 +115,7 @@ export function StatusCodesChart({ data }) {
             height={36} 
             iconType="circle"
             wrapperStyle={{ fontSize: '11px', color: '#a1a1aa' }}
+            formatter={(value, entry) => `${value} (${entry.payload.value})`}
           />
         </PieChart>
       </ResponsiveContainer>
