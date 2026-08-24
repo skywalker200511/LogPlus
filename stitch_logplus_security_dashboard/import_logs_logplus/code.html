@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Import Logs - LOGPLUS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-tertiary-fixed": "#311400",
+                        "secondary-fixed": "#e3e1ec",
+                        "on-secondary": "#2f3038",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "primary": "#adc6ff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-secondary-fixed-variant": "#46464e",
+                        "on-tertiary-container": "#461f00",
+                        "secondary-container": "#4a4b53",
+                        "on-background": "#e5e1e4",
+                        "on-secondary-fixed": "#1a1b22",
+                        "on-primary-container": "#00285d",
+                        "surface-tint": "#adc6ff",
+                        "primary-fixed": "#d8e2ff",
+                        "inverse-surface": "#e5e1e4",
+                        "on-tertiary": "#502400",
+                        "inverse-primary": "#005ac2",
+                        "surface-container-lowest": "#0e0e10",
+                        "tertiary-container": "#df7412",
+                        "surface-container-low": "#1c1b1d",
+                        "secondary-fixed-dim": "#c6c5cf",
+                        "surface-bright": "#39393b",
+                        "surface-container-highest": "#353437",
+                        "on-surface": "#e5e1e4",
+                        "on-primary": "#002e6a",
+                        "surface-container-high": "#2a2a2c",
+                        "on-primary-fixed": "#001a42",
+                        "background": "#131315",
+                        "tertiary-fixed": "#ffdcc6",
+                        "surface-container": "#201f22",
+                        "primary-container": "#4d8eff",
+                        "surface-variant": "#353437",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-error": "#690005",
+                        "surface-dim": "#131315",
+                        "surface": "#131315",
+                        "secondary": "#c6c5cf",
+                        "tertiary": "#ffb786",
+                        "outline": "#8c909f",
+                        "on-secondary-container": "#bcbbc5",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "outline-variant": "#424754",
+                        "inverse-on-surface": "#313032"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "component-padding-x": "0.75rem",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem",
+                        "component-padding-y": "0.5rem",
+                        "sidebar-width": "260px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-md": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased overflow-x-hidden min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-[260px] fixed left-0 top-0 bg-surface-container dark:bg-surface-container border-r border-outline-variant flex flex-col h-full py-6 px-4 z-50">
+<div class="flex items-center gap-3 mb-8 px-2">
+<img alt="Security Shield Logo" class="w-8 h-8 object-contain" data-alt="A minimalist, geometric shield icon representing a modern cybersecurity operations center. Designed with sharp, precise lines in a dark, high-contrast environment. The shield incorporates subtle blue and silver accents against a deep black background, conveying security and technological sophistication. No text or gradients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG2ducDovRHVFCC84fIVyZ9dSkYI0K5sKIwNAtbwxmn_dY_rL1uFe5sEmo_nUqni2-JvDc9fGXgZEL7QhPPoOBNRh5BCXCwm2kq8RVxSA3rDL4er2yB7ybRrxxwoiIkydW37cO2GbQzNjFTTbpDZXn98YTp1RS5H4ohoZqjuDugRxG77iXunMmfaSQAwXQc9a0jkgRJRPC-IgdSl3DlSMm4j8Zj0pA2Fz_5vaWCJ0hR4yfDdZeqs6S"/>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight leading-none">LOGPLUS</h1>
+<span class="text-label-caps font-label-caps text-on-surface-variant">SOC Platform</span>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">list_alt</span>
+<span class="font-body-md text-body-md">Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">error</span>
+<span class="font-body-md text-body-md">Anomalies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-primary dark:text-primary font-bold bg-secondary-container/20 border-r-2 border-primary opacity-80 scale-[0.99] transition-all duration-200" href="#">
+<span class="material-symbols-outlined filled text-[20px]">upload_file</span>
+<span class="font-body-md text-body-md">Import Logs</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-1 border-t border-outline-variant pt-4">
+<button class="w-full bg-[#3b82f6] text-white px-4 py-2 rounded text-body-sm font-body-sm font-semibold mb-4 hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                Export Report
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+<span class="font-body-md text-body-md">Profile</span>
+</a>
+</div>
+</aside>
+<!-- Main Wrapper -->
+<div class="ml-[260px] flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 h-16 bg-surface dark:bg-surface border-b border-outline-variant flex justify-between items-center px-gutter w-full sticky z-40">
+<div class="flex items-center gap-4">
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface">Import Logs</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Upload server logs for anomaly analysis.</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all p-2 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all p-2 rounded-full">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="border border-outline-variant text-on-surface px-4 py-[6px] rounded text-body-sm font-body-sm hover:bg-surface-container-high transition-colors">
+                    Security Overview
+                </button>
+<button class="bg-[#3b82f6] text-white px-4 py-[6px] rounded text-body-sm font-body-sm hover:opacity-90 transition-opacity">
+                    Refresh
+                </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-2">
+<img alt="Security Operator Profile" class="w-full h-full object-cover" data-alt="A close-up, dimly lit portrait of a focused cybersecurity operator in a modern command center. The subject is softly illuminated by the glow of multiple blue and green monitors, reflecting off their glasses. The aesthetic is gritty, professional, and intense, prioritizing realism over stylized illustration. Deep blacks and cool neon tones dominate the palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOTMYQnz0NBSzRD1slp9tqmN07dok23st9LPbXvcVuh-AZ_IHVrobB0duZNLKxUUynF4VSgK-z_zScPPZxpaaaMuvmnRZAljQpQaTvDA93ClasaO9Del-ruGiW2GwParHkUKMdvQk9Bo9GIKmJTZO-VbS9scNLCq4sI69F3x7BlFmE7A72i9jsSNkBj_cPH2yawSrE1_CW_JRfilsmV0HdGL3ckuSVYirSmiJswEp4QMZHfvd4fzO7"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-6 md:p-8 max-w-container-max mx-auto w-full">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+<!-- Left Column: Upload Area -->
+<div class="lg:col-span-2 flex flex-col gap-6">
+<!-- Drag and Drop Area -->
+<div class="bg-[#27272a] border-2 border-dashed border-[#3f3f46] rounded-xl p-10 flex flex-col items-center justify-center text-center transition-all hover:border-[#3b82f6] hover:bg-[#2a2a2c] group cursor-pointer h-[320px]">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center mb-6 group-hover:bg-[#3b82f6]/10 transition-colors">
+<span class="material-symbols-outlined text-[32px] text-on-surface-variant group-hover:text-[#3b82f6]">cloud_upload</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface mb-2">Drop CSV file here or Browse files</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-6 max-w-md">Maximum file size: 500MB. Supported formats: .csv, .log, .txt. Files are encrypted in transit and at rest.</p>
+<div class="flex gap-3">
+<button class="bg-[#3b82f6] text-white px-6 py-2 rounded text-body-sm font-body-sm font-semibold hover:opacity-90 transition-opacity">
+                                Select File
+                            </button>
+</div>
+</div>
+<!-- Success State (Hidden by default, shown for example) -->
+<div class="bg-surface-container border border-[#3f3f46] rounded-lg p-5 flex items-start gap-4">
+<div class="text-[#10b981] mt-1">
+<span class="material-symbols-outlined filled">check_circle</span>
+</div>
+<div class="flex-1">
+<h4 class="text-body-lg font-body-lg font-semibold text-on-surface">Import complete</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">1,250 logs processed successfully.</p>
+<div class="mt-4 flex items-center gap-2 bg-[#18181b] px-3 py-2 rounded border border-[#3f3f46] w-fit">
+<span class="w-2 h-2 rounded-full bg-[#ef4444]"></span>
+<span class="text-body-sm font-body-sm text-on-surface">42 anomalies detected</span>
+<a class="text-[#3b82f6] text-body-sm font-body-sm ml-2 hover:underline" href="#">View in Anomalies</a>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Info & Requirements -->
+<div class="lg:col-span-1 flex flex-col gap-6">
+<!-- Required Format Card -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded-lg p-5">
+<div class="flex items-center justify-between mb-4 border-b border-[#3f3f46] pb-3">
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">data_object</span>
+                                Required Format
+                            </h3>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">Ensure your CSV file contains the following columns exactly as named below to guarantee accurate parsing.</p>
+<div class="bg-[#18181b] border border-[#3f3f46] rounded overflow-hidden">
+<ul class="flex flex-col text-code-md font-code-md text-on-surface divide-y divide-[#3f3f46]">
+<li class="px-3 py-2 flex items-center justify-between hover:bg-surface-container-highest transition-colors">
+<span>Timestamp</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">ISO 8601</span>
+</li>
+<li class="px-3 py-2 flex items-center justify-between hover:bg-surface-container-highest transition-colors">
+<span>IP_Address</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">STRING</span>
+</li>
+<li class="px-3 py-2 flex items-center justify-between hover:bg-surface-container-highest transition-colors">
+<span>Request_Type</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">ENUM</span>
+</li>
+<li class="px-3 py-2 flex items-center justify-between hover:bg-surface-container-highest transition-colors">
+<span>Status_Code</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">INT</span>
+</li>
+<li class="px-3 py-2 flex items-center justify-between hover:bg-surface-container-highest transition-colors">
+<span>User_Agent</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">STRING</span>
+</li>
+<li class="px-3 py-2 flex items-center justify-between hover:bg-surface-container-highest transition-colors">
+<span>Session_ID</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">UUID</span>
+</li>
+<li class="px-3 py-2 flex items-center justify-between hover:bg-surface-container-highest transition-colors">
+<span>Location</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">STRING</span>
+</li>
+</ul>
+</div>
+<div class="mt-6 pt-4 border-t border-[#3f3f46]">
+<button class="w-full bg-transparent border border-[#3f3f46] text-white px-4 py-2 rounded text-body-sm font-body-sm hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+                                Download sample CSV
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

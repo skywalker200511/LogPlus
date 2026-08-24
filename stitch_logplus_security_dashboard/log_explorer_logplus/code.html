@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LogPlus - Log Explorer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ffb4ab",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-tertiary-fixed": "#311400",
+                    "secondary-fixed": "#e3e1ec",
+                    "on-secondary": "#2f3038",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a",
+                    "primary": "#adc6ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-secondary-fixed-variant": "#46464e",
+                    "on-tertiary-container": "#461f00",
+                    "secondary-container": "#4a4b53",
+                    "on-background": "#e5e1e4",
+                    "on-secondary-fixed": "#1a1b22",
+                    "on-primary-container": "#00285d",
+                    "surface-tint": "#adc6ff",
+                    "primary-fixed": "#d8e2ff",
+                    "inverse-surface": "#e5e1e4",
+                    "on-tertiary": "#502400",
+                    "inverse-primary": "#005ac2",
+                    "surface-container-lowest": "#0e0e10",
+                    "tertiary-container": "#df7412",
+                    "surface-container-low": "#1c1b1d",
+                    "secondary-fixed-dim": "#c6c5cf",
+                    "surface-bright": "#39393b",
+                    "surface-container-highest": "#353437",
+                    "on-surface": "#e5e1e4",
+                    "on-primary": "#002e6a",
+                    "surface-container-high": "#2a2a2c",
+                    "on-primary-fixed": "#001a42",
+                    "background": "#131315",
+                    "tertiary-fixed": "#ffdcc6",
+                    "surface-container": "#201f22",
+                    "primary-container": "#4d8eff",
+                    "surface-variant": "#353437",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-error": "#690005",
+                    "surface-dim": "#131315",
+                    "surface": "#131315",
+                    "secondary": "#c6c5cf",
+                    "tertiary": "#ffb786",
+                    "outline": "#8c909f",
+                    "on-secondary-container": "#bcbbc5",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "outline-variant": "#424754",
+                    "inverse-on-surface": "#313032"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "component-padding-x": "0.75rem",
+                    "gutter": "1rem",
+                    "section-gap": "1.5rem",
+                    "component-padding-y": "0.5rem",
+                    "sidebar-width": "260px",
+                    "container-max": "1440px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "code-md": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "display": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "code-md": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #09090b; color: #e5e1e4; }
+        .border-base { border-color: #3f3f46; }
+        .bg-level-1 { background-color: #18181b; }
+        .bg-level-2 { background-color: #27272a; }
+        .btn-primary { background-color: #3b82f6; color: white; }
+        .btn-secondary { background-color: transparent; border: 1px solid #3f3f46; color: white; }
+        
+        /* Custom Scrollbar for dense tables */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #18181b; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
+    </style>
+</head>
+<body class="font-body-md text-body-md h-screen overflow-hidden flex">
+<!-- SideNavBar (Shared Component) -->
+<nav class="bg-surface-container dark:bg-surface-container h-screen w-[260px] fixed left-0 top-0 border-r border-outline-variant flex flex-col h-full py-6 px-4 z-20 shrink-0">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center shrink-0 border border-primary/30">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight leading-tight">LOGPLUS</h1>
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase">SOC Platform</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex flex-col gap-1 flex-grow">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px] group-active:opacity-80 group-active:scale-[0.99]">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-primary dark:text-primary font-bold bg-secondary-container/20 border-r-2 border-primary group" href="#">
+<span class="material-symbols-outlined text-[20px] group-active:opacity-80 group-active:scale-[0.99]" style="font-variation-settings: 'FILL' 1;">list_alt</span>
+<span class="font-body-md text-body-md">Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px] group-active:opacity-80 group-active:scale-[0.99]">error</span>
+<span class="font-body-md text-body-md flex-grow">Anomalies</span>
+<span class="w-2 h-2 rounded-full bg-error ml-auto"></span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px] group-active:opacity-80 group-active:scale-[0.99]">upload_file</span>
+<span class="font-body-md text-body-md">Import Logs</span>
+</a>
+</div>
+<!-- CTA & Footer -->
+<div class="mt-auto pt-6 flex flex-col gap-4">
+<button class="w-full btn-secondary h-10 rounded-md font-headline-sm text-headline-sm flex items-center justify-center gap-2 hover:bg-secondary-container/10 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                Export Report
+            </button>
+<div class="border-t border-outline-variant pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+<span class="font-body-sm text-body-sm">Profile</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-grow flex flex-col ml-[260px] h-screen bg-[#09090b]">
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface dark:bg-surface docked full-width top-0 h-16 border-b border-outline-variant flex justify-between items-center px-gutter shrink-0 z-10 relative">
+<div class="flex items-center gap-4 flex-grow max-w-2xl">
+<!-- Search Bar (on_left) -->
+<div class="relative w-full max-w-md group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-[#09090b] border border-[#3f3f46] text-white rounded-md h-9 pl-9 pr-3 text-body-sm font-body-sm focus:border-[#3b82f6] focus:ring-0 focus:outline-none transition-colors placeholder:text-[#71717a]" placeholder="Search logs via JQL or free text..." type="text"/>
+<div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+<kbd class="hidden sm:inline-block px-1.5 py-0.5 rounded border border-[#3f3f46] bg-[#18181b] text-label-caps font-label-caps text-[#71717a]">⌘</kbd>
+<kbd class="hidden sm:inline-block px-1.5 py-0.5 rounded border border-[#3f3f46] bg-[#18181b] text-label-caps font-label-caps text-[#71717a]">K</kbd>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 shrink-0">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface text-body-sm font-body-sm transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+                    Refresh
+                </button>
+<div class="w-px h-4 bg-outline-variant"></div>
+<button class="text-primary hover:text-primary-fixed-dim text-body-sm font-headline-sm transition-colors active:scale-95 duration-100">
+                    Security Overview
+                </button>
+<div class="flex items-center gap-2 ml-2">
+<button class="p-1.5 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all active:scale-95 duration-100 relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-error rounded-full"></span>
+</button>
+<button class="p-1.5 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all active:scale-95 duration-100">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+</div>
+<div class="ml-2 pl-4 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover opacity-80 mix-blend-luminosity" data-alt="A minimal, professional avatar placeholder in dark mode for a security operator, featuring a subtle geometric mesh pattern in muted blues and grays to represent a secure, high-tech environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAirBbkItp7VRXtIuDNLi09T6l1f7DH3Kc_gR4cDWoov8z4RHdlUvIApC192jfA_9OsAW51E15SJrfGhINuGC7aLhoT_QxkkgVDZ3zKGtPnwgq8vfeLOmk7DadhzeyGdP5hFeA8nJoQp5urOq4IHtgQ_OsArCwaZDgu_uXG2TfZm5ccES97xGO_ObGbqWpXsEmng0woTfaZcrmSC0OnpqeVlruR_6qh_C2mPkLkQdfvUmscQcjAM7jw"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas / Page Content -->
+<main class="flex-grow flex flex-col p-6 overflow-hidden">
+<!-- Page Header -->
+<div class="mb-6 shrink-0 flex justify-between items-end">
+<div>
+<h2 class="text-display font-display text-on-surface mb-1">Log Explorer</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Search and investigate incoming request logs.</p>
+</div>
+<div class="flex gap-2">
+<button class="btn-secondary h-8 px-3 rounded text-body-sm font-body-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">save</span>
+                        Save View
+                    </button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="bg-level-2 border border-base rounded-lg p-3 mb-4 shrink-0 flex flex-wrap items-center gap-3">
+<!-- Date Filter -->
+<button class="flex items-center gap-2 bg-[#09090b] border border-[#3f3f46] rounded px-3 h-8 text-body-sm font-body-sm text-on-surface hover:border-[#3b82f6] transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+                    Last 24 Hours
+                    <span class="material-symbols-outlined text-[16px] text-on-surface-variant ml-2">expand_more</span>
+</button>
+<div class="w-px h-5 bg-[#3f3f46]"></div>
+<!-- Select Filters -->
+<select class="bg-[#09090b] border border-[#3f3f46] rounded h-8 px-2 text-body-sm font-body-sm text-on-surface focus:border-[#3b82f6] focus:ring-0 py-0 min-w-[120px]">
+<option value="">Status: All</option>
+<option value="200">2xx Success</option>
+<option value="400">4xx Client Error</option>
+<option value="500">5xx Server Error</option>
+</select>
+<select class="bg-[#09090b] border border-[#3f3f46] rounded h-8 px-2 text-body-sm font-body-sm text-on-surface focus:border-[#3b82f6] focus:ring-0 py-0 min-w-[120px]">
+<option value="">Method: All</option>
+<option value="GET">GET</option>
+<option value="POST">POST</option>
+<option value="PUT">PUT</option>
+<option value="DELETE">DELETE</option>
+</select>
+<select class="bg-[#09090b] border border-[#3f3f46] rounded h-8 px-2 text-body-sm font-body-sm text-on-surface focus:border-[#3b82f6] focus:ring-0 py-0 min-w-[120px]">
+<option value="">Location: All</option>
+<option value="US-East">US-East</option>
+<option value="EU-Central">EU-Central</option>
+<option value="AP-South">AP-South</option>
+</select>
+<!-- Spacer -->
+<div class="flex-grow"></div>
+<!-- Anomaly Toggle -->
+<label class="flex items-center gap-2 cursor-pointer group">
+<div class="relative">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-8 h-4 bg-[#3f3f46] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-error"></div>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface group-hover:text-error transition-colors">Anomaly-only</span>
+</label>
+<button class="ml-2 text-on-surface-variant hover:text-on-surface flex items-center justify-center p-1 rounded hover:bg-[#3f3f46] transition-colors" title="Clear Filters">
+<span class="material-symbols-outlined text-[18px]">filter_alt_off</span>
+</button>
+</div>
+<!-- Dense Logs Table Container -->
+<div class="flex-grow bg-level-2 border border-base rounded-lg flex flex-col overflow-hidden">
+<div class="overflow-x-auto flex-grow">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead class="bg-level-1 sticky top-0 z-10 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-[#3f3f46]">
+<tr>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group w-12 text-center">
+<span class="material-symbols-outlined text-[14px]">more_vert</span>
+</th>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group">
+                                    Timestamp <span class="material-symbols-outlined text-[12px] opacity-0 group-hover:opacity-100 align-middle">arrow_downward</span>
+</th>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group">
+                                    Source IP
+                                </th>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group w-20">
+                                    Method
+                                </th>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group w-1/3">
+                                    Path
+                                </th>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group w-20">
+                                    Status
+                                </th>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group w-24 text-right">
+                                    Latency
+                                </th>
+<th class="py-2 px-3 text-label-caps font-label-caps text-[#71717a] uppercase cursor-pointer hover:text-on-surface group w-32 text-right">
+                                    Anomaly Score
+                                </th>
+</tr>
+</thead>
+<tbody class="font-code-md text-code-md text-on-surface-variant divide-y divide-[#18181b]">
+<!-- Row 1: High Anomaly -->
+<tr class="hover:bg-[#18181b] group relative transition-colors cursor-pointer bg-[rgba(239,68,68,0.05)] border-l-2 border-l-error">
+<td class="py-2 px-3 text-center border-l border-transparent">
+<button class="opacity-0 group-hover:opacity-100 text-[#71717a] hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+</td>
+<td class="py-2 px-3">2023-10-27 14:32:01.442</td>
+<td class="py-2 px-3 text-[#3b82f6]">192.168.1.104</td>
+<td class="py-2 px-3"><span class="text-tertiary-fixed-dim">POST</span></td>
+<td class="py-2 px-3 truncate max-w-[200px]" title="/api/v1/auth/login">/api/v1/auth/login</td>
+<td class="py-2 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold bg-[rgba(239,68,68,0.1)] text-[#ef4444]">401</span>
+</td>
+<td class="py-2 px-3 text-right">145ms</td>
+<td class="py-2 px-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<div class="w-16 h-1.5 bg-[#18181b] rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 92%"></div>
+</div>
+<span class="text-error font-bold">0.92</span>
+</div>
+</td>
+</tr>
+<!-- Row 2: Medium Anomaly -->
+<tr class="hover:bg-[#18181b] group relative transition-colors cursor-pointer border-l-2 border-l-transparent">
+<td class="py-2 px-3 text-center">
+<button class="opacity-0 group-hover:opacity-100 text-[#71717a] hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+</td>
+<td class="py-2 px-3">2023-10-27 14:31:59.102</td>
+<td class="py-2 px-3 text-[#3b82f6]">10.0.4.22</td>
+<td class="py-2 px-3"><span class="text-primary-fixed-dim">GET</span></td>
+<td class="py-2 px-3 truncate max-w-[200px]" title="/api/v1/users/admin/config">/api/v1/users/admin/config</td>
+<td class="py-2 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold bg-[rgba(234,179,8,0.1)] text-[#eab308]">403</span>
+</td>
+<td class="py-2 px-3 text-right">89ms</td>
+<td class="py-2 px-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<div class="w-16 h-1.5 bg-[#18181b] rounded-full overflow-hidden">
+<div class="h-full bg-[#eab308]" style="width: 68%"></div>
+</div>
+<span class="text-[#eab308]">0.68</span>
+</div>
+</td>
+</tr>
+<!-- Row 3: Normal -->
+<tr class="hover:bg-[#18181b] group relative transition-colors cursor-pointer border-l-2 border-l-transparent">
+<td class="py-2 px-3 text-center">
+<button class="opacity-0 group-hover:opacity-100 text-[#71717a] hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+</td>
+<td class="py-2 px-3">2023-10-27 14:31:55.001</td>
+<td class="py-2 px-3 text-[#3b82f6]">172.16.0.5</td>
+<td class="py-2 px-3"><span class="text-primary-fixed-dim">GET</span></td>
+<td class="py-2 px-3 truncate max-w-[200px]" title="/healthz">/healthz</td>
+<td class="py-2 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold bg-[rgba(34,197,94,0.1)] text-[#22c55e]">200</span>
+</td>
+<td class="py-2 px-3 text-right">12ms</td>
+<td class="py-2 px-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<div class="w-16 h-1.5 bg-[#18181b] rounded-full overflow-hidden">
+<div class="h-full bg-[#3f3f46]" style="width: 12%"></div>
+</div>
+<span class="text-[#71717a]">0.12</span>
+</div>
+</td>
+</tr>
+<!-- Row 4: Normal -->
+<tr class="hover:bg-[#18181b] group relative transition-colors cursor-pointer border-l-2 border-l-transparent">
+<td class="py-2 px-3 text-center">
+<button class="opacity-0 group-hover:opacity-100 text-[#71717a] hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+</td>
+<td class="py-2 px-3">2023-10-27 14:31:52.887</td>
+<td class="py-2 px-3 text-[#3b82f6]">192.168.1.104</td>
+<td class="py-2 px-3"><span class="text-tertiary-fixed-dim">POST</span></td>
+<td class="py-2 px-3 truncate max-w-[200px]" title="/api/v1/data/sync">/api/v1/data/sync</td>
+<td class="py-2 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold bg-[rgba(34,197,94,0.1)] text-[#22c55e]">201</span>
+</td>
+<td class="py-2 px-3 text-right text-[#eab308]">845ms</td>
+<td class="py-2 px-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<div class="w-16 h-1.5 bg-[#18181b] rounded-full overflow-hidden">
+<div class="h-full bg-[#3f3f46]" style="width: 25%"></div>
+</div>
+<span class="text-[#71717a]">0.25</span>
+</div>
+</td>
+</tr>
+<!-- Row 5: High Anomaly -->
+<tr class="hover:bg-[#18181b] group relative transition-colors cursor-pointer bg-[rgba(239,68,68,0.05)] border-l-2 border-l-error">
+<td class="py-2 px-3 text-center border-l border-transparent">
+<button class="opacity-0 group-hover:opacity-100 text-[#71717a] hover:text-on-surface"><span class="material-symbols-outlined text-[16px]">visibility</span></button>
+</td>
+<td class="py-2 px-3">2023-10-27 14:31:45.112</td>
+<td class="py-2 px-3 text-[#3b82f6]">203.0.113.42</td>
+<td class="py-2 px-3"><span class="text-error-container">DELETE</span></td>
+<td class="py-2 px-3 truncate max-w-[200px]" title="/api/v1/system/nodes/primary">/api/v1/system/nodes/primary</td>
+<td class="py-2 px-3">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-bold bg-[rgba(239,68,68,0.1)] text-[#ef4444]">500</span>
+</td>
+<td class="py-2 px-3 text-right">1204ms</td>
+<td class="py-2 px-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<div class="w-16 h-1.5 bg-[#18181b] rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 98%"></div>
+</div>
+<span class="text-error font-bold">0.98</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="bg-level-1 border-t border-[#3f3f46] p-3 flex items-center justify-between shrink-0">
+<span class="text-body-sm font-body-sm text-[#71717a]">Showing 1 to 5 of 12,403 logs (Filtered)</span>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#3f3f46] text-[#71717a] hover:text-white hover:border-[#52525b] transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-[#3f3f46] text-white font-body-sm text-body-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#3f3f46] text-[#71717a] hover:text-white hover:border-[#52525b] transition-colors font-body-sm text-body-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#3f3f46] text-[#71717a] hover:text-white hover:border-[#52525b] transition-colors font-body-sm text-body-sm">3</button>
+<span class="px-2 text-[#71717a]">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#3f3f46] text-[#71717a] hover:text-white hover:border-[#52525b] transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

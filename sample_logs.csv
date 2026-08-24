@@ -1,0 +1,26 @@
+Timestamp,IP_Address,Request_Type,Status_Code,User_Agent,Session_ID,Location
+2024-01-15T08:15:22Z,192.168.1.102,GET,200,Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36,sess_001,New York
+2024-01-15T08:15:45Z,192.168.1.102,GET,200,Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36,sess_001,New York
+2024-01-15T09:05:12Z,203.0.113.44,GET,404,Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Safari/605.1.15,sess_002,London
+2024-01-15T09:30:05Z,10.0.0.55,GET,403,python-requests/2.28.1,sess_003,Unknown
+2024-01-15T09:30:10Z,10.0.0.55,POST,403,python-requests/2.28.1,sess_003,Unknown
+2024-01-15T09:30:15Z,10.0.0.55,PUT,403,python-requests/2.28.1,sess_003,Unknown
+2024-01-15T09:30:20Z,10.0.0.55,DELETE,403,python-requests/2.28.1,sess_003,Unknown
+2024-01-15T10:12:33Z,198.51.100.77,GET,200,Mozilla/5.0 (Linux; Android 12; SM-G991B) AppleWebKit/537.36,sess_004,Tokyo
+2024-01-15T11:45:11Z,192.168.1.102,POST,201,Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36,sess_001,New York
+2024-01-16T02:11:09Z,10.0.0.55,GET,401,,sess_005,Unknown
+2024-01-16T02:11:11Z,10.0.0.55,POST,401,,sess_005,Unknown
+2024-01-16T02:11:13Z,10.0.0.55,GET,401,,sess_005,Unknown
+2024-01-16T08:22:45Z,172.16.0.4,GET,200,Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/108.0.0.0,sess_006,Berlin
+2024-01-16T08:25:30Z,172.16.0.4,GET,200,Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/108.0.0.0,sess_006,Berlin
+2024-01-16T14:10:02Z,8.8.8.8,GET,404,curl/7.68.0,sess_007,São Paulo
+2024-01-16T14:10:05Z,8.8.8.8,GET,404,curl/7.68.0,sess_007,São Paulo
+2024-01-16T14:10:08Z,8.8.8.8,GET,404,curl/7.68.0,sess_007,São Paulo
+2024-01-16T14:10:11Z,8.8.8.8,GET,404,curl/7.68.0,sess_007,São Paulo
+2024-01-17T09:00:00Z,192.168.1.150,GET,200,Mozilla/5.0 (Windows NT 10.0; Win64; x64) Firefox/109.0,sess_008,London
+2024-01-17T09:05:12Z,192.168.1.150,GET,500,Mozilla/5.0 (Windows NT 10.0; Win64; x64) Firefox/109.0,sess_008,London
+2024-01-17T11:30:45Z,203.0.113.100,POST,200,Mozilla/5.0 (iPhone; CPU iPhone OS 16_1 like Mac OS X) AppleWebKit/605.1.15,sess_009,New York
+2024-01-17T15:22:18Z,10.0.0.55,GET,429,Nmap Scripting Engine,sess_010,Unknown
+2024-01-17T15:22:19Z,10.0.0.55,GET,429,Nmap Scripting Engine,sess_010,Unknown
+2024-01-17T15:22:20Z,10.0.0.55,GET,429,Nmap Scripting Engine,sess_010,Unknown
+2024-01-18T10:00:05Z,192.168.1.102,GET,200,Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36,sess_001,New York

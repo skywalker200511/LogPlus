@@ -1,0 +1,332 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Anomaly Detection - LogPlus</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ffb4ab",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-tertiary-fixed": "#311400",
+                        "secondary-fixed": "#e3e1ec",
+                        "on-secondary": "#2f3038",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "primary": "#adc6ff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-secondary-fixed-variant": "#46464e",
+                        "on-tertiary-container": "#461f00",
+                        "secondary-container": "#4a4b53",
+                        "on-background": "#e5e1e4",
+                        "on-secondary-fixed": "#1a1b22",
+                        "on-primary-container": "#00285d",
+                        "surface-tint": "#adc6ff",
+                        "primary-fixed": "#d8e2ff",
+                        "inverse-surface": "#e5e1e4",
+                        "on-tertiary": "#502400",
+                        "inverse-primary": "#005ac2",
+                        "surface-container-lowest": "#0e0e10",
+                        "tertiary-container": "#df7412",
+                        "surface-container-low": "#1c1b1d",
+                        "secondary-fixed-dim": "#c6c5cf",
+                        "surface-bright": "#39393b",
+                        "surface-container-highest": "#353437",
+                        "on-surface": "#e5e1e4",
+                        "on-primary": "#002e6a",
+                        "surface-container-high": "#2a2a2c",
+                        "on-primary-fixed": "#001a42",
+                        "background": "#131315",
+                        "tertiary-fixed": "#ffdcc6",
+                        "surface-container": "#201f22",
+                        "primary-container": "#4d8eff",
+                        "surface-variant": "#353437",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-error": "#690005",
+                        "surface-dim": "#131315",
+                        "surface": "#131315",
+                        "secondary": "#c6c5cf",
+                        "tertiary": "#ffb786",
+                        "outline": "#8c909f",
+                        "on-secondary-container": "#bcbbc5",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "outline-variant": "#424754",
+                        "inverse-on-surface": "#313032"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "component-padding-x": "0.75rem",
+                        "gutter": "1rem",
+                        "section-gap": "1.5rem",
+                        "component-padding-y": "0.5rem",
+                        "sidebar-width": "260px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "code-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "code-md": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .nav-item-active .material-symbols-outlined { font-variation-settings: 'FILL' 1; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: theme('colors.surface-variant'); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline-variant'); }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface-container h-screen w-[260px] fixed left-0 top-0 border-r border-outline-variant flex flex-col py-6 px-4 z-20">
+<div class="flex items-center gap-3 mb-8 px-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">security</span>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight">LOGPLUS</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">SOC Platform</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="font-body-md text-body-md">Logs</span>
+</a>
+<!-- Active State -->
+<a class="nav-item-active flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-primary font-bold bg-secondary-container/20 border-r-2 border-primary opacity-80 scale-[0.99] transition-all" href="#">
+<span class="material-symbols-outlined">error</span>
+<span class="font-body-md text-body-md">Anomalies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="font-body-md text-body-md">Import Logs</span>
+</a>
+</div>
+<div class="mt-auto space-y-1 pt-4 border-t border-outline-variant">
+<button class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#3b82f6] text-white rounded-DEFAULT hover:bg-blue-600 transition-colors mb-4 text-body-sm font-headline-sm">
+                Export Report
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-body-md text-body-md">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-[260px] h-screen w-[calc(100%-260px)] relative bg-surface">
+<!-- TopAppBar -->
+<header class="bg-surface docked full-width top-0 h-16 border-b border-outline-variant flex justify-between items-center px-gutter shrink-0 z-10">
+<div class="flex items-center">
+<!-- Search (Conceptual) -->
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high p-2 rounded-full transition-all">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+<div class="h-4 w-px bg-outline-variant"></div>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high p-2 rounded-full transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high p-2 rounded-full transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<button class="px-3 py-1.5 border border-[#3f3f46] text-white rounded-DEFAULT text-body-sm hover:bg-surface-container-high transition-colors">
+                    Security Overview
+                </button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<main class="flex-1 overflow-y-auto p-section-gap">
+<div class="max-w-container-max mx-auto space-y-6">
+<!-- Page Header -->
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-display text-display text-on-surface">Anomaly Detection</h1>
+<p class="text-on-surface mt-1 text-body-md">Real-time threat analysis and behavioral deviations.</p>
+</div>
+<div class="flex gap-2">
+<select class="bg-[#09090b] border border-[#3f3f46] text-white text-body-sm rounded-DEFAULT px-3 py-1.5 focus:border-[#3b82f6] focus:ring-0">
+<option>Last 24 Hours</option>
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+</div>
+<!-- Summary Stats -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-[#27272a] border border-[#3f3f46] rounded-lg p-5 flex flex-col justify-between">
+<span class="text-label-caps font-label-caps text-[#71717a] uppercase">Total Detected</span>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-headline-md text-white">1,248</span>
+
+</div>
+</div>
+<div class="bg-[#27272a] border border-[#3f3f46] rounded-lg p-5 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute inset-0 bg-red-500/5 z-0"></div>
+<div class="relative z-10">
+<span class="text-label-caps font-label-caps text-[#71717a] uppercase flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-red-500"></span> Critical
+                            </span>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-headline-md text-red-500">14</span>
+<span class="text-body-sm text-[#71717a]">Needs Action</span>
+</div>
+</div>
+</div>
+<div class="bg-[#27272a] border border-[#3f3f46] rounded-lg p-5 flex flex-col justify-between">
+<span class="text-label-caps font-label-caps text-[#71717a] uppercase flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-orange-500"></span> High Risk
+                        </span>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-headline-md text-orange-500">89</span>
+</div>
+</div>
+<div class="bg-[#27272a] border border-[#3f3f46] rounded-lg p-5 flex flex-col justify-between">
+<span class="text-label-caps font-label-caps text-[#71717a] uppercase flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-yellow-500"></span> Suspicious
+                        </span>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-headline-md text-yellow-500">342</span>
+</div>
+</div>
+</div>
+<!-- Main Panel -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded-lg flex flex-col min-h-[500px]">
+<!-- Toolbar -->
+<div class="p-4 border-b border-[#3f3f46] flex justify-between items-center bg-[#18181b] rounded-t-lg">
+<div class="flex gap-2">
+<button class="px-3 py-1.5 bg-[#3f3f46] text-white text-body-sm rounded-DEFAULT">All</button>
+<button class="px-3 py-1.5 text-on-surface-variant hover:text-white text-body-sm rounded-DEFAULT border border-transparent hover:border-[#3f3f46]">Critical</button>
+<button class="px-3 py-1.5 text-on-surface-variant hover:text-white text-body-sm rounded-DEFAULT border border-transparent hover:border-[#3f3f46]">High</button>
+<button class="px-3 py-1.5 text-on-surface-variant hover:text-white text-body-sm rounded-DEFAULT border border-transparent hover:border-[#3f3f46]">Suspicious</button>
+<button class="px-3 py-1.5 text-on-surface-variant hover:text-white text-body-sm rounded-DEFAULT border border-transparent hover:border-[#3f3f46]">Resolved</button>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-[#71717a] text-sm">search</span>
+<input class="bg-[#09090b] border border-[#3f3f46] text-white text-body-sm rounded-DEFAULT pl-8 pr-3 py-1.5 focus:border-[#3b82f6] focus:ring-0 w-64 placeholder-[#71717a]" placeholder="Search IP, Reason..." type="text">
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#18181b] border-b border-[#3f3f46]">
+<th class="px-4 py-3 font-label-caps text-label-caps text-[#71717a] uppercase font-bold tracking-wider">Score</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-[#71717a] uppercase font-bold tracking-wider">IP Address</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-[#71717a] uppercase font-bold tracking-wider">Detection Reason</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-[#71717a] uppercase font-bold tracking-wider">Timestamp</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-[#71717a] uppercase font-bold tracking-wider">Status</th>
+</tr>
+</thead>
+<tbody class="text-body-sm font-body-sm divide-y divide-[#18181b]">
+<!-- Row 1 -->
+<tr class="hover:bg-[#18181b] transition-colors cursor-pointer group">
+<td class="px-4 py-3">
+<span class="inline-flex items-center justify-center px-2 py-1 rounded bg-red-500/10 text-red-500 font-code-md text-code-md border border-red-500/20">98</span>
+</td>
+<td class="px-4 py-3 font-code-md text-[#c2c6d6]">192.168.1.45</td>
+<td class="px-4 py-3 text-white truncate max-w-xs">Multiple failed login attempts followed by successful root access</td>
+<td class="px-4 py-3 text-[#71717a] whitespace-nowrap">2 mins ago</td>
+<td class="px-4 py-3">
+<button class="text-[#3b82f6] hover:text-blue-400 font-medium">Investigate</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#18181b] transition-colors cursor-pointer group">
+<td class="px-4 py-3">
+<span class="inline-flex items-center justify-center px-2 py-1 rounded bg-orange-500/10 text-orange-500 font-code-md text-code-md border border-orange-500/20">82</span>
+</td>
+<td class="px-4 py-3 font-code-md text-[#c2c6d6]">10.0.5.12</td>
+<td class="px-4 py-3 text-white truncate max-w-xs">Automated user agent detected bypassing WAF</td>
+<td class="px-4 py-3 text-[#71717a] whitespace-nowrap">15 mins ago</td>
+<td class="px-4 py-3">
+<button class="text-[#3b82f6] hover:text-blue-400 font-medium">Investigate</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#18181b] transition-colors cursor-pointer group">
+<td class="px-4 py-3">
+<span class="inline-flex items-center justify-center px-2 py-1 rounded bg-yellow-500/10 text-yellow-500 font-code-md text-code-md border border-yellow-500/20">65</span>
+</td>
+<td class="px-4 py-3 font-code-md text-[#c2c6d6]">172.16.254.1</td>
+<td class="px-4 py-3 text-white truncate max-w-xs">Unusual volume of data exfiltration (port 443)</td>
+<td class="px-4 py-3 text-[#71717a] whitespace-nowrap">1 hr ago</td>
+<td class="px-4 py-3">
+<button class="text-[#3b82f6] hover:text-blue-400 font-medium">Investigate</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#18181b] transition-colors cursor-pointer group">
+<td class="px-4 py-3">
+<span class="inline-flex items-center justify-center px-2 py-1 rounded bg-yellow-500/10 text-yellow-500 font-code-md text-code-md border border-yellow-500/20">58</span>
+</td>
+<td class="px-4 py-3 font-code-md text-[#c2c6d6]">192.168.1.102</td>
+<td class="px-4 py-3 text-white truncate max-w-xs">Concurrent logins from distinct geolocations</td>
+<td class="px-4 py-3 text-[#71717a] whitespace-nowrap">2 hrs ago</td>
+<td class="px-4 py-3">
+<span class="text-[#71717a]">Monitoring</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-[#18181b] transition-colors cursor-pointer group">
+<td class="px-4 py-3">
+<span class="inline-flex items-center justify-center px-2 py-1 rounded bg-[#3f3f46]/50 text-[#a1a1aa] font-code-md text-code-md border border-[#3f3f46]">42</span>
+</td>
+<td class="px-4 py-3 font-code-md text-[#c2c6d6]">10.0.0.5</td>
+<td class="px-4 py-3 text-white truncate max-w-xs">Minor configuration drift detected on web server</td>
+<td class="px-4 py-3 text-[#71717a] whitespace-nowrap">5 hrs ago</td>
+<td class="px-4 py-3">
+<span class="text-[#71717a] flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> Resolved</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+
+</body></html>

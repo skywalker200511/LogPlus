@@ -1,0 +1,661 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>LogPlus - Security Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ffb4ab",
+                      "on-surface-variant": "#c2c6d6",
+                      "on-tertiary-fixed": "#311400",
+                      "secondary-fixed": "#e3e1ec",
+                      "on-secondary": "#2f3038",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a",
+                      "primary": "#adc6ff",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-secondary-fixed-variant": "#46464e",
+                      "on-tertiary-container": "#461f00",
+                      "secondary-container": "#4a4b53",
+                      "on-background": "#e5e1e4",
+                      "on-secondary-fixed": "#1a1b22",
+                      "on-primary-container": "#00285d",
+                      "surface-tint": "#adc6ff",
+                      "primary-fixed": "#d8e2ff",
+                      "inverse-surface": "#e5e1e4",
+                      "on-tertiary": "#502400",
+                      "inverse-primary": "#005ac2",
+                      "surface-container-lowest": "#0e0e10",
+                      "tertiary-container": "#df7412",
+                      "surface-container-low": "#1c1b1d",
+                      "secondary-fixed-dim": "#c6c5cf",
+                      "surface-bright": "#39393b",
+                      "surface-container-highest": "#353437",
+                      "on-surface": "#e5e1e4",
+                      "on-primary": "#002e6a",
+                      "surface-container-high": "#2a2a2c",
+                      "on-primary-fixed": "#001a42",
+                      "background": "#131315",
+                      "tertiary-fixed": "#ffdcc6",
+                      "surface-container": "#201f22",
+                      "primary-container": "#4d8eff",
+                      "surface-variant": "#353437",
+                      "tertiary-fixed-dim": "#ffb786",
+                      "on-primary-fixed-variant": "#004395",
+                      "on-error": "#690005",
+                      "surface-dim": "#131315",
+                      "surface": "#131315",
+                      "secondary": "#c6c5cf",
+                      "tertiary": "#ffb786",
+                      "outline": "#8c909f",
+                      "on-secondary-container": "#bcbbc5",
+                      "on-tertiary-fixed-variant": "#723600",
+                      "outline-variant": "#424754",
+                      "inverse-on-surface": "#313032"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "component-padding-x": "0.75rem",
+                      "gutter": "1rem",
+                      "section-gap": "1.5rem",
+                      "component-padding-y": "0.5rem",
+                      "sidebar-width": "260px",
+                      "container-max": "1440px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "code-md": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "display": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "code-md": [
+                              "13px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Base styles */
+        body {
+            background-color: #09090b; /* Level 0 Base */
+            color: theme('colors.on-surface');
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Material Symbols Outline */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Chart Canvas */
+        #activityChart, #httpChart, #methodChart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Custom Scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #18181b; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f3f46; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525b; 
+        }
+
+        /* Focus styles */
+        input:focus {
+            outline: none;
+            border-color: #3b82f6 !important;
+        }
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-background text-on-surface antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface-container dark:bg-surface-container h-screen w-[260px] fixed left-0 top-0 border-r border-outline-variant flex flex-col h-full py-6 px-4 z-20 flex-shrink-0">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[20px]" data-weight="fill" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface tracking-tight leading-tight">LOGPLUS</h1>
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-wider text-[10px]">SOC Platform</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 space-y-1">
+<!-- Active Tab: Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-primary dark:text-primary font-bold bg-secondary-container/20 border-r-2 border-primary hover:bg-secondary-container/10 transition-colors duration-200 opacity-80 scale-[0.99]" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="text-body-md font-body-md">Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="error">error</span>
+<span class="text-body-md font-body-md">Anomalies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+<span class="text-body-md font-body-md">Import Logs</span>
+</a>
+</nav>
+<!-- CTA -->
+<div class="mt-auto mb-6 px-2">
+<button class="w-full bg-[#3b82f6] text-white text-body-sm font-body-md h-[32px] rounded flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+                Export Report
+            </button>
+</div>
+<!-- Footer Tabs -->
+<div class="border-t border-outline-variant pt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-sm font-body-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface hover:bg-secondary-container/10 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="text-body-sm font-body-sm">Profile</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col ml-[260px] h-screen bg-[#09090b]">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface docked full-width top-0 h-16 border-b border-outline-variant flex justify-between items-center px-gutter shrink-0 z-10 sticky">
+<!-- Title & Subtitle (Left) -->
+<div class="flex flex-col">
+<h2 class="text-headline-md font-headline-md font-bold text-on-surface m-0 leading-tight">Security Overview</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant m-0">Monitor incoming logs and identify unusual activity</p>
+</div>
+<!-- Center/Right Controls -->
+<div class="flex items-center gap-4">
+<!-- Search Bar -->
+<div class="relative hidden lg:block w-64">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-[#09090b] border border-[#3f3f46] text-white text-body-sm rounded h-[32px] pl-8 pr-3 focus:border-[#3b82f6] focus:ring-0 placeholder:text-[#71717a]" placeholder="Search logs, IPs, rules..." type="text">
+</div>
+<!-- Secondary Action -->
+<button class="hidden md:flex items-center gap-2 border border-[#3f3f46] bg-transparent text-white h-[32px] px-3 rounded text-body-sm hover:bg-surface-container-high transition-colors">
+                    Security Overview
+                </button>
+<!-- Primary Action (Refresh) -->
+<button class="flex items-center justify-center bg-[#3b82f6] text-white h-[32px] w-[32px] rounded hover:bg-blue-600 transition-colors" title="Refresh">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+<!-- Icon Actions -->
+<div class="flex items-center gap-2 border-l border-[#3f3f46] pl-4 ml-2">
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-1" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-1" title="Help">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<!-- Profile Avatar Placeholder -->
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant overflow-hidden ml-2 flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A small, professional corporate headshot of a security operator in a dimly lit, high-tech command center. Cool blue monitor glow illuminates their face. Clean, modern aesthetic, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv_2WzslGslKXBKo53NHXw0EegxgaSUy4gC-xQ8ztC_9UlL5WklRLb_Wt1EPX8I7-DxSwX3KC_So-t4r8wbJeW1a6Ze6cW3NEwn082pFKwcpBHK4UPh7jFcvEZLRg8fb5NF0Rz0wZAFJZx-b08DjskMyN8O8xa2DT1B5y0WCHNRB7nKy5I3AEFUDpx9NEwSsCaJH0VNHRwGhB6TB_XpVmP3TkSuCnQz-Te-kqvI4kadysJ6Q6AKfjK">
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="flex-1 overflow-y-auto p-gutter max-w-[1440px] mx-auto w-full">
+<div class="flex flex-col gap-section-gap pb-8">
+<!-- Metrics Row -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1: Total Logs -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded p-5 flex flex-col justify-between h-28 relative overflow-hidden group">
+<div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4 transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-[80px]">receipt_long</span>
+</div>
+<span class="text-label-caps font-label-caps text-[#71717a] uppercase tracking-wider">Total Logs</span>
+<div class="flex items-end gap-2">
+<span class="text-display font-display font-semibold text-on-surface">12,540</span>
+
+</div>
+</div>
+<!-- Card 2: Anomalies -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded p-5 flex flex-col justify-between h-28 relative overflow-hidden group">
+<div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4 transition-transform group-hover:scale-110 text-error">
+<span class="material-symbols-outlined text-[80px]">warning</span>
+</div>
+<span class="text-label-caps font-label-caps text-[#71717a] uppercase tracking-wider">Detected Anomalies</span>
+<div class="flex items-end gap-2">
+<span class="text-display font-display font-semibold text-error">327</span>
+
+</div>
+</div>
+<!-- Card 3: Normal Activity -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded p-5 flex flex-col justify-between h-28 relative overflow-hidden group">
+<div class="absolute right-0 top-0 opacity-10 transform translate-x-4 -translate-y-4 transition-transform group-hover:scale-110 text-emerald-400">
+<span class="material-symbols-outlined text-[80px]">check_circle</span>
+</div>
+<span class="text-label-caps font-label-caps text-[#71717a] uppercase tracking-wider">Normal Activity</span>
+<div class="flex items-end gap-2">
+<span class="text-display font-display font-semibold text-emerald-400">12,213</span>
+</div>
+</div>
+<!-- Card 4: Anomaly Rate -->
+
+</section>
+<!-- Charts Row -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+<!-- Main Activity Chart -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded lg:col-span-2 p-5 flex flex-col h-[350px]">
+<div class="flex justify-between items-center mb-4 shrink-0">
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface m-0">Activity Overview</h3>
+<div class="flex bg-[#18181b] rounded border border-[#3f3f46] p-0.5">
+<button class="px-3 py-1 text-label-caps font-label-caps rounded bg-[#3f3f46] text-white">24H</button>
+<button class="px-3 py-1 text-label-caps font-label-caps rounded text-on-surface-variant hover:text-white">7D</button>
+<button class="px-3 py-1 text-label-caps font-label-caps rounded text-on-surface-variant hover:text-white">30D</button>
+</div>
+</div>
+<div class="flex-1 relative w-full h-full min-h-0">
+<canvas id="activityChart" width="764" height="328" style="display: block; box-sizing: border-box; height: 262.8px; width: 611.7px;"></canvas>
+</div>
+</div>
+<!-- Mini Distribution Charts Column -->
+<div class="grid grid-rows-2 gap-4 h-[350px]">
+<!-- HTTP Status Codes -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded p-4 flex flex-col min-h-0">
+<h3 class="text-body-sm font-headline-sm font-semibold text-on-surface mb-2 shrink-0">HTTP Status Codes</h3>
+<div class="flex-1 relative w-full h-full flex items-center justify-center overflow-hidden">
+<!-- Doughnut chart placeholder -->
+<canvas id="httpChart" width="356" height="166" style="display: block; box-sizing: border-box; height: 132.9px; width: 285.1px;"></canvas>
+</div>
+</div>
+<!-- Request Methods -->
+<div class="bg-[#27272a] border border-[#3f3f46] rounded p-4 flex flex-col min-h-0">
+<h3 class="text-body-sm font-headline-sm font-semibold text-on-surface mb-2 shrink-0">Request Methods</h3>
+<div class="flex-1 relative w-full h-full flex items-center justify-center pb-2">
+<canvas id="methodChart" width="356" height="166" style="display: block; box-sizing: border-box; height: 132.9px; width: 285.1px;"></canvas>
+</div>
+</div>
+</div>
+</section>
+<!-- Data Table Section -->
+<section class="bg-[#27272a] border border-[#3f3f46] rounded flex flex-col overflow-hidden">
+<div class="p-4 border-b border-[#3f3f46] flex justify-between items-center bg-[#18181b]">
+<h3 class="text-headline-sm font-headline-sm font-semibold text-on-surface m-0">Recent Anomalies</h3>
+<button class="text-body-sm font-body-sm text-primary hover:text-primary-container transition-colors flex items-center gap-1">
+                            View All <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr>
+<th class="bg-[#18181b] text-[#71717a] font-label-caps text-label-caps uppercase px-4 py-3 border-b border-[#3f3f46] whitespace-nowrap">Timestamp</th>
+<th class="bg-[#18181b] text-[#71717a] font-label-caps text-label-caps uppercase px-4 py-3 border-b border-[#3f3f46] whitespace-nowrap">IP Address</th>
+<th class="bg-[#18181b] text-[#71717a] font-label-caps text-label-caps uppercase px-4 py-3 border-b border-[#3f3f46] w-full">Request</th>
+<th class="bg-[#18181b] text-[#71717a] font-label-caps text-label-caps uppercase px-4 py-3 border-b border-[#3f3f46]">Status</th>
+<th class="bg-[#18181b] text-[#71717a] font-label-caps text-label-caps uppercase px-4 py-3 border-b border-[#3f3f46]">Location</th>
+<th class="bg-[#18181b] text-[#71717a] font-label-caps text-label-caps uppercase px-4 py-3 border-b border-[#3f3f46] text-right">Score</th>
+<th class="bg-[#18181b] text-[#71717a] font-label-caps text-label-caps uppercase px-4 py-3 border-b border-[#3f3f46] text-center">Risk</th>
+</tr>
+</thead>
+<tbody class="text-body-sm font-body-sm divide-y divide-[#18181b]">
+<!-- Row 1 -->
+<tr class="hover:bg-[#353437]/50 transition-colors">
+<td class="px-4 py-3 text-on-surface-variant whitespace-nowrap">2023-10-27 14:32:01</td>
+<td class="px-4 py-3 font-code-md text-code-md text-[#c2c6d6]">202.118.116.11</td>
+<td class="px-4 py-3 font-code-md text-code-md text-amber-200">DELETE /api/v1/user</td>
+<td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-[#18181b] border border-[#3f3f46] font-code-md text-xs">403</span></td>
+<td class="px-4 py-3 text-on-surface-variant flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#3f3f46]"></span> Brazil</td>
+<td class="px-4 py-3 text-right font-code-md text-error">87.5</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[rgba(239,68,68,0.1)] text-[#ef4444] border border-[rgba(239,68,68,0.2)]">
+                                            Critical
+                                        </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#353437]/50 transition-colors">
+<td class="px-4 py-3 text-on-surface-variant whitespace-nowrap">2023-10-27 14:30:15</td>
+<td class="px-4 py-3 font-code-md text-code-md text-[#c2c6d6]">45.22.19.102</td>
+<td class="px-4 py-3 font-code-md text-code-md text-[#adc6ff]">POST /auth/login</td>
+<td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-[#18181b] border border-[#3f3f46] font-code-md text-xs">401</span></td>
+<td class="px-4 py-3 text-on-surface-variant flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#3f3f46]"></span> Russia</td>
+<td class="px-4 py-3 text-right font-code-md text-amber-400">65.2</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[rgba(245,158,11,0.1)] text-[#f59e0b] border border-[rgba(245,158,11,0.2)]">
+                                            High
+                                        </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#353437]/50 transition-colors">
+<td class="px-4 py-3 text-on-surface-variant whitespace-nowrap">2023-10-27 14:28:44</td>
+<td class="px-4 py-3 font-code-md text-code-md text-[#c2c6d6]">198.51.100.24</td>
+<td class="px-4 py-3 font-code-md text-code-md text-[#adc6ff]">GET /admin/config.php</td>
+<td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-[#18181b] border border-[#3f3f46] font-code-md text-xs">404</span></td>
+<td class="px-4 py-3 text-on-surface-variant flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#3f3f46]"></span> Unknown</td>
+<td class="px-4 py-3 text-right font-code-md text-amber-400">58.9</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[rgba(245,158,11,0.1)] text-[#f59e0b] border border-[rgba(245,158,11,0.2)]">
+                                            High
+                                        </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#353437]/50 transition-colors">
+<td class="px-4 py-3 text-on-surface-variant whitespace-nowrap">2023-10-27 14:25:10</td>
+<td class="px-4 py-3 font-code-md text-code-md text-[#c2c6d6]">104.28.19.45</td>
+<td class="px-4 py-3 font-code-md text-code-md text-[#adc6ff]">GET /wp-login.php</td>
+<td class="px-4 py-3"><span class="px-2 py-0.5 rounded bg-[#18181b] border border-[#3f3f46] font-code-md text-xs">403</span></td>
+<td class="px-4 py-3 text-on-surface-variant flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#3f3f46]"></span> USA</td>
+<td class="px-4 py-3 text-right font-code-md text-on-surface-variant">42.1</td>
+<td class="px-4 py-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[rgba(161,161,170,0.1)] text-[#a1a1aa] border border-[rgba(161,161,170,0.2)]">
+                                            Elevated
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Chart Setup Scripts -->
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Common Chart.js defaults for dark theme
+            Chart.defaults.color = '#71717a';
+            Chart.defaults.font.family = 'Inter';
+            Chart.defaults.font.size = 11;
+            
+            // 1. Main Activity Line Chart
+            const ctxActivity = document.getElementById('activityChart').getContext('2d');
+            
+            // Generate some dummy data
+            const labels = Array.from({length: 24}, (_, i) => `${i}:00`);
+            const normalData = Array.from({length: 24}, () => Math.floor(Math.random() * 800) + 200);
+            const anomalyData = Array.from({length: 24}, () => Math.floor(Math.random() * 30));
+            // Add a spike
+            anomalyData[14] = 120;
+            anomalyData[15] = 85;
+
+            new Chart(ctxActivity, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Normal Logs',
+                            data: normalData,
+                            borderColor: '#3f3f46',
+                            backgroundColor: 'rgba(63, 63, 70, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Anomalies',
+                            data: anomalyData,
+                            borderColor: '#ef4444', // Tailwind red-500
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 2,
+                            pointBackgroundColor: '#09090b',
+                            pointHoverRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 6,
+                                boxHeight: 6,
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#18181b',
+                            titleColor: '#e5e1e4',
+                            bodyColor: '#c2c6d6',
+                            borderColor: '#3f3f46',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: true,
+                            boxPadding: 4
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#18181b',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 12
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: '#18181b',
+                                drawBorder: false
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // 2. HTTP Status Codes Doughnut
+            const ctxHttp = document.getElementById('httpChart').getContext('2d');
+            new Chart(ctxHttp, {
+                type: 'doughnut',
+                data: {
+                    labels: ['200 OK', '404 Not Found', '403 Forbidden', '500 Error'],
+                    datasets: [{
+                        data: [75, 15, 7, 3],
+                        backgroundColor: [
+                            '#3f3f46', // Muted dark gray
+                            '#71717a', // Medium gray
+                            '#f59e0b', // Warning amber
+                            '#ef4444'  // Error red
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 6,
+                                boxHeight: 6,
+                                padding: 10,
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 3. Request Methods Bar
+            const ctxMethod = document.getElementById('methodChart').getContext('2d');
+            new Chart(ctxMethod, {
+                type: 'bar',
+                data: {
+                    labels: ['GET', 'POST', 'PUT', 'DELETE'],
+                    datasets: [{
+                        label: 'Requests',
+                        data: [6500, 3200, 800, 250],
+                        backgroundColor: [
+                            '#3f3f46',
+                            '#52525b',
+                            '#71717a',
+                            '#a1a1aa'
+                        ],
+                        borderRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        },
+                        y: {
+                            display: false, // Hide Y axis for clean look
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+
+</body></html>
