@@ -84,10 +84,16 @@ export function RequestMethodsChart({ data }) {
 
 const STATUS_COLORS = {
   '200': '#22c55e',
+  '301': '#3b82f6',
+  '302': '#60a5fa',
+  '401': '#fbbf24',
   '403': '#f59e0b',
-  '404': '#71717a',
+  '404': '#a1a1aa',
+  '429': '#ea580c',
   '500': '#ef4444',
-  'Other': '#3b82f6'
+  '502': '#dc2626',
+  '503': '#b91c1c',
+  'Other': '#71717a'
 };
 
 export function StatusCodesChart({ data }) {
@@ -98,7 +104,7 @@ export function StatusCodesChart({ data }) {
           <Pie
             data={data}
             cx="50%"
-            cy="45%"
+            cy="35%"
             innerRadius={45}
             outerRadius={65}
             paddingAngle={2}
@@ -112,9 +118,9 @@ export function StatusCodesChart({ data }) {
           <Tooltip content={<CustomTooltip />} />
           <Legend 
             verticalAlign="bottom" 
-            height={36} 
+            height={70} 
             iconType="circle"
-            wrapperStyle={{ fontSize: '11px', color: '#a1a1aa' }}
+            wrapperStyle={{ fontSize: '11px', color: '#a1a1aa', paddingTop: '5px' }}
             formatter={(value, entry) => `${value} (${entry.payload.value})`}
           />
         </PieChart>
