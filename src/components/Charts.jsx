@@ -104,9 +104,9 @@ export function StatusCodesChart({ data }) {
           <Pie
             data={data}
             cx="50%"
-            cy="40%"
-            innerRadius={40}
-            outerRadius={60}
+            cy="50%"
+            innerRadius={45}
+            outerRadius={65}
             paddingAngle={2}
             dataKey="value"
             stroke="none"
@@ -117,10 +117,9 @@ export function StatusCodesChart({ data }) {
           </Pie>
           <Tooltip content={<CustomTooltip />} />
           <Legend 
-            verticalAlign="bottom" 
-            height={70} 
+            verticalAlign="bottom"
             iconType="circle"
-            wrapperStyle={{ fontSize: '11px', color: '#a1a1aa', paddingTop: '5px' }}
+            wrapperStyle={{ fontSize: '11px', color: '#a1a1aa', paddingTop: '10px' }}
             formatter={(value, entry) => `${value} (${entry.payload.value})`}
           />
         </PieChart>
