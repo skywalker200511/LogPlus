@@ -3,7 +3,7 @@ import {
   AreaChart, Area, 
   BarChart, Bar, 
   PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer 
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -98,9 +98,9 @@ export function StatusCodesChart({ data }) {
           <Pie
             data={data}
             cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
+            cy="45%"
+            innerRadius={45}
+            outerRadius={65}
             paddingAngle={2}
             dataKey="value"
             stroke="none"
@@ -110,6 +110,12 @@ export function StatusCodesChart({ data }) {
             ))}
           </Pie>
           <Tooltip content={<CustomTooltip />} />
+          <Legend 
+            verticalAlign="bottom" 
+            height={36} 
+            iconType="circle"
+            wrapperStyle={{ fontSize: '11px', color: '#a1a1aa' }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </ChartWrapper>
