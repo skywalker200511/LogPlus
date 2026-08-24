@@ -149,17 +149,16 @@ export async function fetchChartData() {
     const requestTypeDistMap = {};
 
     data.forEach(log => {
-      // Format to HH:00 (extract time for better hourly visualization)
       const dateObj = new Date(log.timestamp);
-      // Format as "HH:00"
-      const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).replace(/:\d\d /, ':00 ');
+      // Format as "MMM DD" (e.g., "Jan 13")
+      const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
       // Logs over time
-      logsOverTimeMap[timeStr] = (logsOverTimeMap[timeStr] || 0) + 1;
+      logsOverTimeMap[dateStr] = (logsOverTimeMap[dateStr] || 0) + 1;
       
       // Anomalies over time
       if (log.is_anomaly) {
-        anomaliesOverTimeMap[timeStr] = (anomaliesOverTimeMap[timeStr] || 0) + 1;
+        anomaliesOverTimeMap[dateStr] = (anomaliesOverTimeMap[dateStr] || 0) + 1;
       }
 
       // Status code dist
