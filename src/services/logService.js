@@ -34,10 +34,11 @@ export async function fetchLogs(filters = {}) {
       query = query.ilike('location', `%${filters.location}%`);
     }
 
-    // Search by IP or session ID (supports both 'searchText' and 'search' field names)
+    // Search by IP or endpoint (supports both 'searchText' and 'search' field names)
     const searchText = filters.searchText || filters.search || '';
     if (searchText) {
-      query = query.or(`ip_address.ilike.%${searchText}%,session_id.ilike.%${searchText}%`);
+      // Note: session_id is a UUID, so .ilike on it crashes the query. We search ip_address and endpoint instead.
+      query = query.or(`ip_address.ilike.%${searchText}%,endpoint.ilike.%${searchText}%`);
     }
 
     query = query.order('timestamp', { ascending: false }).limit(500);
