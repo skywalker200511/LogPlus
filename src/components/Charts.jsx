@@ -23,8 +23,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const ChartWrapper = ({ title, children }) => (
-  <div className="bg-[#27272a] border border-[#3f3f46] rounded-md p-5 flex flex-col h-[300px]">
-    <h3 className="text-sm font-semibold text-white mb-4">{title}</h3>
+  <div className="bg-[#27272a] border border-[#3f3f46] rounded-md p-5 flex flex-col h-full w-full">
+    <h3 className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-4">{title}</h3>
     <div className="flex-1 w-full h-full min-h-0">
       {children}
     </div>

@@ -93,39 +93,30 @@ export default function Dashboard() {
       {/* Main Content Area */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Left: Activity Overview (3/4) */}
-        <div className="lg:col-span-3 bg-[#27272a] border border-[#3f3f46] rounded-md p-5 flex flex-col">
-          <h3 className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-4">Activity Overview</h3>
-          <div className="flex-1 min-h-[300px]">
-            {loading ? (
-              <div className="w-full h-full flex items-center justify-center text-[#71717a]">Loading chart...</div>
-            ) : (
-              <TrafficChart data={chartData.logsOverTime} />
-            )}
-          </div>
+        <div className="lg:col-span-3 flex flex-col h-full">
+          {loading ? (
+            <div className="w-full h-[300px] bg-[#27272a] border border-[#3f3f46] rounded-md flex items-center justify-center text-[#71717a]">Loading chart...</div>
+          ) : (
+            <TrafficChart data={chartData.logsOverTime} />
+          )}
         </div>
 
         {/* Right: Stacked Cards (1/4) */}
-        <div className="lg:col-span-1 space-y-6 flex flex-col">
-          <div className="bg-[#27272a] border border-[#3f3f46] rounded-md p-5 flex-1 min-h-[180px]">
-            <h3 className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-4">HTTP Status Codes</h3>
-            <div className="h-[120px]">
-              {loading ? (
-                <div className="w-full h-full flex items-center justify-center text-[#71717a]">Loading...</div>
-              ) : (
-                <StatusCodesChart data={chartData.statusCodeDist} />
-              )}
-            </div>
+        <div className="lg:col-span-1 flex flex-col gap-6">
+          <div className="flex-1">
+            {loading ? (
+              <div className="w-full h-full min-h-[200px] bg-[#27272a] border border-[#3f3f46] rounded-md flex items-center justify-center text-[#71717a]">Loading...</div>
+            ) : (
+              <StatusCodesChart data={chartData.statusCodeDist} />
+            )}
           </div>
           
-          <div className="bg-[#27272a] border border-[#3f3f46] rounded-md p-5 flex-1 min-h-[180px]">
-            <h3 className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-4">Request Methods</h3>
-            <div className="h-[120px]">
-              {loading ? (
-                <div className="w-full h-full flex items-center justify-center text-[#71717a]">Loading...</div>
-              ) : (
-                <RequestMethodsChart data={chartData.requestTypeDist} />
-              )}
-            </div>
+          <div className="flex-1">
+            {loading ? (
+              <div className="w-full h-full min-h-[200px] bg-[#27272a] border border-[#3f3f46] rounded-md flex items-center justify-center text-[#71717a]">Loading...</div>
+            ) : (
+              <RequestMethodsChart data={chartData.requestTypeDist} />
+            )}
           </div>
         </div>
       </div>
