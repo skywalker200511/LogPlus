@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchLogs, updateAnomalyResults } from '../services/logService';
-import { analyzeAllLogs } from '../algorithms/anomalyDetector';
-import { generateExplanation, generateBriefExplanation } from '../utils/explanationGenerator';
+import { fetchLogs } from '../services/logService';
 import FilterBar from '../components/FilterBar';
 import LogsTable from '../components/LogsTable';
 import LogDetailModal from '../components/LogDetailModal';
@@ -9,7 +7,6 @@ import LogDetailModal from '../components/LogDetailModal';
 export default function Logs() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [analyzing, setAnalyzing] = useState(false);
   const [filters, setFilters] = useState({
     search: '',
     anomalyStatus: 'all',
@@ -39,50 +36,6 @@ export default function Logs() {
     setFilters(prev => ({ ...prev, ...newFilters }));
   };
 
-  const handleAnalyzeLogs = async () => {
-    setAnalyzing(true);
-    try {
-      const logsToAnalyze = logs.filter(l => l.anomaly_score === null || l.anomaly_score === undefined);
-      const targetLogs = logsToAnalyze.length > 0 ? logsToAnalyze : logs;
-      
-      if (targetLogs.length === 0) {
-        alert("No logs to analyze.");
-        setAnalyzing(false);
-        return;
-      }
-      
-      const analysisResults = analyzeAllLogs(targetLogs);
-      
-      const updates = analysisResults.map(result => {
-        const originalLog = targetLogs.find(l => l.id === result.id);
-        const explanation = generateExplanation(originalLog, result.reasons, result.score, result.riskLevel);
-        const briefReason = generateBriefExplanation(result.reasons);
-        
-        return {
-          id: result.id,
-          is_anomaly: result.isAnomaly,
-          anomaly_score: result.score,
-          anomaly_reason: briefReason,
-          ai_explanation: explanation
-        };
-      });
-      
-      const { success, errorCount } = await updateAnomalyResults(updates);
-      
-      if (success || updates.length > 0) {
-        alert(`Successfully analyzed ${updates.length - (errorCount || 0)} logs.`);
-        loadLogs();
-      } else {
-        alert("Failed to update some log results.");
-      }
-    } catch (error) {
-      console.error("Analysis failed", error);
-      alert("Error analyzing logs.");
-    } finally {
-      setAnalyzing(false);
-    }
-  };
-
   return (
     <div className="space-y-6 flex flex-col h-full">
       {/* Header */}
@@ -92,23 +45,6 @@ export default function Logs() {
           <p className="text-sm text-[#a1a1aa] mt-1">Search and investigate incoming request logs.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button 
-            onClick={handleAnalyzeLogs}
-            disabled={analyzing || logs.length === 0}
-            className="px-4 py-2 bg-[#3b82f6] hover:bg-blue-600 disabled:opacity-50 text-white rounded-md text-sm font-medium transition-colors flex items-center gap-2"
-          >
-            {analyzing ? (
-              <>
-                <span className="material-symbols-outlined animate-spin text-[18px]">sync</span>
-                Analyzing...
-              </>
-            ) : (
-              <>
-                <span className="material-symbols-outlined text-[18px]">analytics</span>
-                Analyze Logs
-              </>
-            )}
-          </button>
           <button className="px-4 py-2 border border-[#3f3f46] text-white rounded-md text-sm font-medium hover:bg-[#27272a] transition-colors flex items-center gap-2">
             <span className="material-symbols-outlined text-[18px]">bookmark</span>
             Save View
