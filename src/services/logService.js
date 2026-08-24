@@ -19,7 +19,10 @@ export async function fetchLogs(filters = {}) {
 
     // Filter by status code (ignore 'All', 'all', or empty)
     if (filters.statusCode && String(filters.statusCode).toLowerCase() !== 'all') {
-      query = query.eq('status_code', parseInt(filters.statusCode, 10));
+      const baseCode = parseInt(filters.statusCode, 10);
+      if (!isNaN(baseCode)) {
+        query = query.gte('status_code', baseCode).lt('status_code', baseCode + 100);
+      }
     }
 
     // Filter by request type (ignore 'All', 'all', or empty)

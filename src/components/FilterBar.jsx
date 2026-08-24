@@ -16,8 +16,8 @@ export default function FilterBar({ filters, onFilterChange }) {
 
       <select 
         className="bg-[#09090b] border border-[#3f3f46] text-white text-sm rounded-md px-3 py-1.5 focus:border-[#3b82f6] focus:ring-0"
-        value={filters.status || ''}
-        onChange={(e) => onFilterChange({ ...filters, status: e.target.value })}
+        value={filters.statusCode || ''}
+        onChange={(e) => onFilterChange({ statusCode: e.target.value })}
       >
         <option value="">Status: All</option>
         <option value="200">2xx Success</option>
@@ -28,8 +28,8 @@ export default function FilterBar({ filters, onFilterChange }) {
 
       <select 
         className="bg-[#09090b] border border-[#3f3f46] text-white text-sm rounded-md px-3 py-1.5 focus:border-[#3b82f6] focus:ring-0"
-        value={filters.method || ''}
-        onChange={(e) => onFilterChange({ ...filters, method: e.target.value })}
+        value={filters.requestType || ''}
+        onChange={(e) => onFilterChange({ requestType: e.target.value })}
       >
         <option value="">Method: All</option>
         <option value="GET">GET</option>
