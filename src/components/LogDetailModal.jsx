@@ -51,19 +51,15 @@ export default function LogDetailModal({ log, onClose }) {
             </div>
             <div>
               <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-1">Source IP</div>
-              <div className="text-sm text-white font-mono-data">{log.source_ip}</div>
+              <div className="text-sm text-white font-mono-data">{log.ip_address}</div>
             </div>
             <div>
               <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-1">Method</div>
-              <div className="text-sm text-white font-mono-data">{log.method}</div>
+              <div className="text-sm text-white font-mono-data">{log.request_type}</div>
             </div>
             <div>
               <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-1">Status Code</div>
               <div className="text-sm text-white font-mono-data">{log.status_code}</div>
-            </div>
-            <div className="col-span-2">
-              <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-1">Endpoint</div>
-              <div className="text-sm text-white font-mono-data break-all">{log.endpoint}</div>
             </div>
             <div className="col-span-2">
               <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-1">User Agent</div>
@@ -79,17 +75,13 @@ export default function LogDetailModal({ log, onClose }) {
             </div>
           </div>
 
-          {log.indicators && log.indicators.length > 0 && (
+          {log.anomaly_reason && (
             <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-2">Indicators</div>
-              <ul className="space-y-1">
-                {log.indicators.map((indicator, idx) => (
-                  <li key={idx} className="text-sm text-white flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                    {indicator}
-                  </li>
-                ))}
-              </ul>
+              <div className="text-[11px] font-bold uppercase tracking-[0.05em] text-[#71717a] mb-2">Detection Reason</div>
+              <div className="text-sm text-white flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                {log.anomaly_reason}
+              </div>
             </div>
           )}
 
